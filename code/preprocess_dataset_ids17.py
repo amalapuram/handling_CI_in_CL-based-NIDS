@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os
 
 # Loading csv files of IDS2017 dataset
 df1 = pd.read_csv("./Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
@@ -69,8 +70,20 @@ print(y)
 # Normalsing Dataset
 X = (df - df.min()) / (df.max() - df.min() + 1e-5)
 
-print("Shape of dataset(X) is", X.shape)
-print("Shape of labels(Y) is", y.shape)
+#print("Shape of dataset(X) is", X.shape)
+#print("Shape of labels(Y) is", y.shape)
 
-np.save("X_whole",X)
-np.save("y_whole",y)
+#np.save("X_whole",X)
+#np.save("y_whole",y)
+
+names = ['BENIGN', 'DoS Hulk', 'PortScan', 'DDoS', 'FTP-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'SSH-Patator', 'Bot', 'Web Attack � Brute Force', 'DoS GoldenEye', 'Web Attack � XSS', 'Infiltration', 'Web Attack � Sql Injection', 'Heartbleed']
+path = "CICIDS2017_Class-wise-normalized_datasets"
+os.mkdir(path)
+for name in names:
+  X_temp = []
+  for i in range(0,y.shape[0]):
+    if y[i,0] == name:
+      X_temp.append((X.iloc[i,:].values))
+  X_temp = np.array(X_temp)
+  #print(X_temp.shape)
+  np.save(F"CICIDS2017_Class-wise-normalized_datasets/{name}", X_temp)
