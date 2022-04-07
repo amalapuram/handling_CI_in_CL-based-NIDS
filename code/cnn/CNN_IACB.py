@@ -182,13 +182,13 @@ input_shape = (img_width, img_height,1)
 hidden_size = 100
 model = Sequential()
 model.add(Conv2D(14, kernel_size=(3, 3), activation='relu', input_shape=input_shape))
-model.add(Dropout(0.2))
 model.add(Flatten())
 model.add(Dense(hidden_size, activation='relu'))
+model.add(Dropout(0.5))
 model.add(Dense(1, activation='sigmoid'))
 
 
-optimizer = keras.optimizers.Adamax(lr=0.000001)      #Optimizer to use while training
+optimizer = keras.optimizers.Adamax(lr=0.001)      #Optimizer to use while training
 loss_fn = keras.losses.BinaryCrossentropy()           #Loss function
 train_acc_metric = keras.metrics.BinaryAccuracy()     #Accuracy metric for training - this metric will be displayed every few epochs in training
 val_acc_metric = keras.metrics.BinaryAccuracy()       #Accuracy metric for validation dataset
